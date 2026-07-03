@@ -53,6 +53,24 @@ def text_width(text, family, size, weight="normal", style="normal", letter_spaci
         width += letter_spacing_em * size * len(text)
     return width
 
+
+_ascent_descent_cache = {}
+
+
+def ascent_descent(family, size, weight="normal", style="normal"):
+    """Real ascent/descent (positive pt) at the given size, from hhea."""
+    key = (family, weight, style)
+    if key not in _ascent_descent_cache:
+        k2 = (family, "italic" if style == "italic" else weight)
+        if k2 not in FONT_FILES:
+            k2 = (family, "normal")
+        tt = TTFont(FONT_FILES[k2])
+        units_per_em = tt["head"].unitsPerEm
+        hhea = tt["hhea"]
+        _ascent_descent_cache[key] = (hhea.ascent / units_per_em, -hhea.descent / units_per_em)
+    a, d = _ascent_descent_cache[key]
+    return a * size, d * size
+
 # ---- geometry (points) ----
 DOC_W, DOC_H = 270.0, 162.0        # 3.75in x 2.25in (bleed doc)
 BLEED = 9.0                         # 0.125in
@@ -66,7 +84,7 @@ CENTER_X = DOC_W / 2
 # ---- palette ----
 WHITE = "#FFFFFF"
 GREEN = "#0F4D3C"
-TEXT = "#111111"
+TEXT = "#000000"   # pure K-only black for print (was #111111, a near-black gray)
 
 SERIF = "EB Garamond"
 SANS = "Montserrat"
@@ -158,21 +176,21 @@ def build_front():
     svg = [SVG_HEAD]
     svg.append(f'  <rect x="0" y="0" width="{DOC_W}" height="{DOC_H}" fill="{WHITE}"/>\n')
 
-    icon_top = 17.6   # positions the whole block to center in the trim box
-    icon_svg, icon_h = lightbulb_icon(CENTER_X, icon_top, 45)
+    icon_top = 17.6   # unchanged -- keeps the same whitespace above the lockup
+    icon_svg, icon_h = lightbulb_icon(CENTER_X, icon_top, 52)  # ~matches width of "CAREER"
     svg.append(icon_svg)
     icon_bottom = icon_top + icon_h
 
-    name_y = icon_bottom + 28
-    svg.append(centered_text(CENTER_X, name_y, "Reimagined by Mira", SERIF, 23.5, TEXT, weight="600"))
+    name_y = icon_bottom + 16   # tightened lockup (was 28)
+    svg.append(centered_text(CENTER_X, name_y, "Reimagined by Mira", SERIF, 25.0, TEXT, weight="600"))
 
     strategy_y = name_y + 17
     strategy_text = "CAREER STRATEGY"
-    ls_em = 0.28
+    ls_em = 0.28 * 0.88   # tracking reduced ~12%
     font_size = 9.0
     text_w = text_width(strategy_text, SANS, font_size, weight="600", letter_spacing_em=ls_em)
     gap = 10
-    line_len = 24
+    line_len = 28   # lengthened ~17% to balance the wider wordmark
     svg.append(hline(CENTER_X - text_w / 2 - gap - line_len, strategy_y - 3, CENTER_X - text_w / 2 - gap))
     svg.append(hline(CENTER_X + text_w / 2 + gap, strategy_y - 3, CENTER_X + text_w / 2 + gap + line_len))
     svg.append(centered_text(CENTER_X, strategy_y, strategy_text, SANS, font_size, GREEN,
@@ -224,7 +242,7 @@ def build_back():
     pad = 12.0
     outline_size = qr_module_size + 2 * pad
     outline_x = (TRIM_X + TRIM_W) - SAFE - outline_size
-    outline_y = SAFE_Y
+    outline_y = SAFE_Y + 3   # nudged down to optically center against the copy block
     rx = 6
 
     qr_x = outline_x + pad
@@ -232,7 +250,7 @@ def build_back():
     qr_svg, n_modules = make_qr_svg("https://reimaginedbymira.com", GREEN, qr_x, qr_y, qr_module_size)
 
     svg.append(f'  <rect x="{outline_x:.3f}" y="{outline_y:.3f}" width="{outline_size:.3f}" height="{outline_size:.3f}" '
-               f'rx="{rx}" fill="{WHITE}" stroke="{GREEN}" stroke-width="1.1"/>\n')
+               f'rx="{rx}" fill="{WHITE}" stroke="{GREEN}" stroke-width="0.8"/>\n')
     svg.append(qr_svg)
 
     # -- header (two lines) --
@@ -273,13 +291,15 @@ def build_back():
     svg.append('  </g>\n')
 
     cta_text = "BOOK YOUR FREE DISCOVERY CALL"
-    cta_size = 5.8
+    # cta_size trimmed slightly (5.8->5.5) to absorb the wider arrow gap and
+    # bigger website text below without the row overflowing
+    cta_size = 5.5
     cta_ls = 0.02
     web_text = "REIMAGINEDBYMIRA.COM"
-    web_size = 6.0
+    web_size = 6.3   # +5%
     web_ls = 0.02
 
-    cta_text_x = circ_cx + circ_r + 5
+    cta_text_x = circ_cx + circ_r + 12   # arrow-to-text gap widened (was 5, +7)
     svg.append(left_text(cta_text_x, cta_y, cta_text, SANS, cta_size, GREEN,
                           weight="700", letter_spacing_em=cta_ls))
 

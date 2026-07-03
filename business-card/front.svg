@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="3.75in" height="2.25in" viewBox="0 0 270.0 162.0">
   <rect x="0" y="0" width="270.0" height="162.0" fill="#FFFFFF"/>
-  <g transform="translate(112.500,17.600) scale(0.45000)"
+  <g transform="translate(109.000,17.600) scale(0.52000)"
      fill="none" stroke="#0F4D3C" stroke-linecap="round" stroke-linejoin="round">
     <g stroke-width="1.1">
       <line x1="50" y1="12" x2="50" y2="1"/>
@@ -25,9 +25,9 @@
     <path stroke-width="0.8" d="M 50,55 C 45,55 43,50 46,46.5 C 48,44.5 50,48 50,55 Z"/>
     <path stroke-width="0.8" d="M 50,55 C 55,55 57,50 54,46.5 C 52,44.5 50,48 50,55 Z"/>
   </g>
-  <text x="135.000" y="106.350" text-anchor="middle" font-family="EB Garamond" font-size="23.5" font-weight="600" font-style="normal" fill="#111111">Reimagined by Mira</text>
-  <line x1="37.235" y1="120.350" x2="61.235" y2="120.350" stroke="#0F4D3C" stroke-width="0.75"/>
-  <line x1="208.765" y1="120.350" x2="232.765" y2="120.350" stroke="#0F4D3C" stroke-width="0.75"/>
-  <text x="133.740" y="123.350" text-anchor="middle" font-family="Montserrat" font-size="9.0" font-weight="600" font-style="normal" fill="#0F4D3C" letter-spacing="2.520">CAREER STRATEGY</text>
-  <text x="135.000" y="141.350" text-anchor="middle" font-family="EB Garamond" font-size="12.5" font-weight="normal" font-style="italic" fill="#0F4D3C">Build Your Next Move.</text>
+  <text x="135.000" y="103.800" text-anchor="middle" font-family="EB Garamond" font-size="25.0" font-weight="600" font-style="normal" fill="#000000">Reimagined by Mira</text>
+  <line x1="35.503" y1="117.800" x2="63.503" y2="117.800" stroke="#0F4D3C" stroke-width="0.75"/>
+  <line x1="206.497" y1="117.800" x2="234.497" y2="117.800" stroke="#0F4D3C" stroke-width="0.75"/>
+  <text x="133.891" y="120.800" text-anchor="middle" font-family="Montserrat" font-size="9.0" font-weight="600" font-style="normal" fill="#0F4D3C" letter-spacing="2.218">CAREER STRATEGY</text>
+  <text x="135.000" y="138.800" text-anchor="middle" font-family="EB Garamond" font-size="12.5" font-weight="normal" font-style="italic" fill="#0F4D3C">Build Your Next Move.</text>
 </svg>
