@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="280" viewBox="0 0 900 280">
+<rect width="900" height="280" fill="white"/>
+<g transform="translate(55.5,14) scale(1.35)"><g fill="none" stroke="#0F4D3C" stroke-width="3.0" stroke-linecap="round" stroke-linejoin="round"><path stroke-width="3.0" d="M 70.0,12 C 40.0,13 28.0,30 28.0,50 C 28.0,70 40.0,86 55.0,96 C 57.0,99 58.0,101 58.0,104 L 82.0,104 C 82.0,101 83.0,99 85.0,96 C 100.0,86 112.0,70 112.0,50 C 112.0,30 100.0,13 70.0,12 Z"/><g stroke-width="2.55"><path d="M 55.0,112 Q 70.0,116 85.0,112"/><path d="M 58.0,124 Q 70.0,128 82.0,124"/></g></g></g>
+<text x="150.0" y="208.60000000000002" text-anchor="middle" font-family="EB Garamond" font-size="21" font-weight="600" fill="#000000">Reimagined by Mira</text>
+<text x="150.0" y="270" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#111">1. Bulb only</text>
+<g transform="translate(355.5,14) scale(1.35)"><g fill="none" stroke="#0F4D3C" stroke-width="3.0" stroke-linecap="round" stroke-linejoin="round"><path stroke-width="3.0" d="M 70.0,12 C 40.0,13 28.0,30 28.0,50 C 28.0,70 40.0,86 55.0,96 C 57.0,99 58.0,101 58.0,104 L 82.0,104 C 82.0,101 83.0,99 85.0,96 C 100.0,86 112.0,70 112.0,50 C 112.0,30 100.0,13 70.0,12 Z"/><g stroke-width="2.55"><path d="M 55.0,112 Q 70.0,116 85.0,112"/><path d="M 58.0,124 Q 70.0,128 82.0,124"/></g><path stroke-width="2.4000000000000004" d="M 70.0,92 C 68.0,78 56.0,64 54.0,46"/><path stroke-width="2.4000000000000004" d="M 70.0,92 C 73.0,74 78.0,58 76.0,38"/></g></g>
+<text x="450.0" y="208.60000000000002" text-anchor="middle" font-family="EB Garamond" font-size="21" font-weight="600" fill="#000000">Reimagined by Mira</text>
+<text x="450.0" y="270" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#111">2. Bulb + abstract filament</text>
+<line x1="300" y1="0" x2="300" y2="280" stroke="#eee"/>
+<g transform="translate(655.5,14) scale(1.35)"><g fill="none" stroke="#0F4D3C" stroke-width="3.0" stroke-linecap="round" stroke-linejoin="round"><path stroke-width="3.0" d="M 70.0,12 C 40.0,13 28.0,30 28.0,50 C 28.0,70 40.0,86 55.0,96 C 57.0,99 58.0,101 58.0,104 L 82.0,104 C 82.0,101 83.0,99 85.0,96 C 100.0,86 112.0,70 112.0,50 C 112.0,30 100.0,13 70.0,12 Z"/><g stroke-width="2.55"><path d="M 55.0,112 Q 70.0,116 85.0,112"/><path d="M 58.0,124 Q 70.0,128 82.0,124"/></g><path stroke-width="2.34" d="M 53.0,92 L 53.0,46 L 70.0,70 L 87.0,46 L 87.0,92"/></g></g>
+<text x="750.0" y="208.60000000000002" text-anchor="middle" font-family="EB Garamond" font-size="21" font-weight="600" fill="#000000">Reimagined by Mira</text>
+<text x="750.0" y="270" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#111">3. Bulb + M-as-filament</text>
+<line x1="600" y1="0" x2="600" y2="280" stroke="#eee"/>
+</svg>

@@ -250,14 +250,29 @@ def build_back():
     left_x = SAFE_X + 2
     right_edge = TRIM_X + TRIM_W - SAFE - 2  # 250 with SAFE=9 setup below
 
+    # -- header/copy block (compute positions first; QR below is centered
+    #    against this block's real optical bounds, not a duplicated formula)
+    header_y1 = SAFE_Y + 12
+    header_y2 = header_y1 + 13
+    italic_y = header_y2 + 15
+    divider1_y = italic_y + 9
+    b_y1 = divider1_y + 15
+    b_y2 = b_y1 + 13
+    b_y3 = b_y2 + 13
+
     # -- QR block (top right) --
-    qr_module_size = 68.4 * 1.09   # 0.95in minimum, +9%
+    qr_module_size = 68.4 * 1.09 * 1.08   # 0.95in minimum, +9% then +8%
     # pad must clear a >=4-module quiet zone (QR spec) and exceed rx so the
     # rounded corner never clips into the finder-pattern squares
     pad = 12.0
     outline_size = qr_module_size + 2 * pad
-    outline_x = right_edge - outline_size   # right edge now shares the same grid line as the CTA row/website
-    outline_y = SAFE_Y + 3   # nudged down to optically center against the copy block
+    outline_x = right_edge - outline_size   # right edge shares the same grid line as the CTA row/website
+    # exact optical center of the left-copy block (header ascent to benefit-line descent)
+    hdr_asc, _ = ascent_descent(SANS, 10.5, weight="500")
+    _, benefit_desc = ascent_descent(SANS, 9.5)
+    block_top = header_y1 - hdr_asc
+    block_bottom = b_y3 + benefit_desc
+    outline_y = (block_top + block_bottom) / 2 - outline_size / 2
     rx = 6
 
     qr_x = outline_x + pad
@@ -265,24 +280,17 @@ def build_back():
     qr_svg, n_modules = make_qr_svg("https://reimaginedbymira.com", GREEN, qr_x, qr_y, qr_module_size)
 
     svg.append(f'  <rect x="{outline_x:.3f}" y="{outline_y:.3f}" width="{outline_size:.3f}" height="{outline_size:.3f}" '
-               f'rx="{rx}" fill="{WHITE}" stroke="{GREEN}" stroke-width="0.56"/>\n')  # -30% from 0.8
+               f'rx="{rx}" fill="{WHITE}" stroke="{GREEN}" stroke-width="0.42"/>\n')  # -25% from 0.56
     svg.append(qr_svg)
 
     # -- header (two lines) --
-    header_y1 = SAFE_Y + 12
-    header_y2 = header_y1 + 13
     svg.append(left_text(left_x, header_y1, "Most career advice", SANS, 10.5, TEXT, weight="500"))
     svg.append(left_text(left_x, header_y2, "focuses on what to do.", SANS, 10.5, TEXT, weight="500"))
 
-    italic_y = header_y2 + 15
     svg.append(left_text(left_x, italic_y, "I focus on how to think.", SERIF, 12, GREEN, style="italic"))
 
-    divider1_y = italic_y + 9
     svg.append(hline(left_x, divider1_y, left_x + 50.4, width=0.9))
 
-    b_y1 = divider1_y + 15
-    b_y2 = b_y1 + 13
-    b_y3 = b_y2 + 13
     svg.append(left_text(left_x, b_y1, "Gain perspective.", SANS, 9.5, TEXT))
     svg.append(left_text(left_x, b_y2, "Build a strategy.", SANS, 9.5, TEXT))
     svg.append(left_text(left_x, b_y3, "Move forward with clarity.", SANS, 9.5, TEXT))
@@ -307,14 +315,16 @@ def build_back():
 
     cta_text = "BOOK YOUR FREE DISCOVERY CALL"
     # cta_size held at 5.5 (not shrunk further) to protect legibility -- see
-    # note in the polish-pass summary about this row being width-constrained
-    cta_size = 5.5
+    # note in the polish-pass summary about this row being width-constrained --
+    # cta_size trimmed again (5.5->5.0) to make room for both the wider arrow
+    # gap and the bigger website text this round asked for simultaneously
+    cta_size = 5.0
     cta_ls = 0.02
     web_text = "REIMAGINEDBYMIRA.COM"
-    web_size = 6.3   # held at last round's size -- see polish-pass note on this row
+    web_size = 6.6   # +5% (was 6.3)
     web_ls = 0.02
 
-    cta_text_x = circ_cx + circ_r + 13   # arrow-to-text gap widened again (was 12, +1)
+    cta_text_x = circ_cx + circ_r + 17   # arrow-to-text gap widened (was 13, +4)
     svg.append(left_text(cta_text_x, cta_y, cta_text, SANS, cta_size, GREEN,
                           weight="700", letter_spacing_em=cta_ls))
 
