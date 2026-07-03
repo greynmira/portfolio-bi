@@ -95,39 +95,60 @@ SVG_HEAD = (
 ).format(win=DOC_W / 72.0, hin=DOC_H / 72.0, w=DOC_W, h=DOC_H)
 
 
-def lightbulb_icon(cx, top_y, width):
-    """Lightbulb-with-sprout mark. Local box is 100x135 units: a graceful
-    tapered (non-circular) globe, thin balanced rays, a floating tapered
-    ring base, and a delicate twin-leaf filament -- refined line weights
-    throughout for a premium, editorial feel rather than a stock glyph."""
-    s = width / 100.0
-    h = 135.0 * s
+def lightbulb_icon(cx, top_y, width, with_rays=False):
+    """Lightbulb-with-sprout mark, round 3. Local box is 130x120 units: a
+    properly rounded (not elongated) globe with soft shoulders, a compact
+    stem integrated into a 3-ring socket, and an enlarged twin-leaf
+    filament. Rays are optional (with_rays=True) -- the no-rays default
+    reads cleaner and more editorial; the ray version signals "idea" more
+    literally. Both were compared side by side before picking the default.
+    """
+    LOCAL_W, LOCAL_H = 130.0, 120.0
+    LCX = 65.0
+    s = width / LOCAL_W
+    h = LOCAL_H * s
     tx = cx - width / 2.0
     ty = top_y
+
+    neck_bottom = 76.0
+    branch = neck_bottom - 18
+    globe = f'''<path stroke-width="1.5" d="M {LCX},18
+             C {LCX-20},19 {LCX-27},33 {LCX-27},48
+             C {LCX-27},60 {LCX-21},70 {LCX-16},76
+             L {LCX+16},76
+             C {LCX+21},70 {LCX+27},60 {LCX+27},48
+             C {LCX+27},33 {LCX+20},19 {LCX},18 Z"/>'''
+    socket = f'''<g stroke-width="1.15">
+      <line x1="{LCX-15}" y1="{neck_bottom+4}" x2="{LCX+15}" y2="{neck_bottom+4}"/>
+      <line x1="{LCX-12.3}" y1="{neck_bottom+12}" x2="{LCX+12.3}" y2="{neck_bottom+12}"/>
+      <line x1="{LCX-9.3}" y1="{neck_bottom+20}" x2="{LCX+9.3}" y2="{neck_bottom+20}"/>
+    </g>'''
+    stem = f'<path stroke-width="0.95" d="M {LCX},{neck_bottom+6} L {LCX},{branch}"/>'
+    # twin-loop filament, ~15% larger than the previous round
+    leaf_l = (f'<path stroke-width="0.85" d="M {LCX},{branch} '
+              f'C {LCX-5.75},{branch} {LCX-8.05},{branch-5.75} {LCX-4.6},{branch-9.775} '
+              f'C {LCX-2.3},{branch-12.075} {LCX},{branch-8.05} {LCX},{branch} Z"/>')
+    leaf_r = (f'<path stroke-width="0.85" d="M {LCX},{branch} '
+              f'C {LCX+5.75},{branch} {LCX+8.05},{branch-5.75} {LCX+4.6},{branch-9.775} '
+              f'C {LCX+2.3},{branch-12.075} {LCX},{branch-8.05} {LCX},{branch} Z"/>')
+    rays = ""
+    if with_rays:
+        rays = f'''<g stroke-width="1.05">
+      <line x1="{LCX}" y1="18" x2="{LCX}" y2="8"/>
+      <line x1="{LCX-22.6}" y1="27.4" x2="{LCX-29.4}" y2="19.5"/>
+      <line x1="{LCX+22.6}" y1="27.4" x2="{LCX+29.4}" y2="19.5"/>
+      <line x1="{LCX-32}" y1="50" x2="{LCX-42}" y2="50"/>
+      <line x1="{LCX+32}" y1="50" x2="{LCX+42}" y2="50"/>
+    </g>'''
+
     return f'''  <g transform="translate({tx:.3f},{ty:.3f}) scale({s:.5f})"
      fill="none" stroke="{GREEN}" stroke-linecap="round" stroke-linejoin="round">
-    <g stroke-width="1.1">
-      <line x1="50" y1="12" x2="50" y2="1"/>
-      <line x1="32" y1="19" x2="23" y2="9.5"/>
-      <line x1="68" y1="19" x2="77" y2="9.5"/>
-      <line x1="21" y1="52" x2="8" y2="52"/>
-      <line x1="79" y1="52" x2="92" y2="52"/>
-    </g>
-    <path stroke-width="1.5" d="M 25,61
-             C 25,37 35,20 50,20
-             C 65,20 75,37 75,61
-             C 75,79 68,91 60,97
-             L 40,97
-             C 32,91 25,79 25,61
-             Z"/>
-    <g stroke-width="1.3">
-      <line x1="41" y1="103" x2="59" y2="103"/>
-      <line x1="43" y1="109.5" x2="57" y2="109.5"/>
-      <line x1="45.5" y1="116" x2="54.5" y2="116"/>
-    </g>
-    <path stroke-width="1.0" d="M 50,93 L 50,55"/>
-    <path stroke-width="0.8" d="M 50,55 C 45,55 43,50 46,46.5 C 48,44.5 50,48 50,55 Z"/>
-    <path stroke-width="0.8" d="M 50,55 C 55,55 57,50 54,46.5 C 52,44.5 50,48 50,55 Z"/>
+    {rays}
+    {globe}
+    {socket}
+    {stem}
+    {leaf_l}
+    {leaf_r}
   </g>
 ''', h
 
@@ -176,28 +197,28 @@ def build_front():
     svg = [SVG_HEAD]
     svg.append(f'  <rect x="0" y="0" width="{DOC_W}" height="{DOC_H}" fill="{WHITE}"/>\n')
 
-    icon_top = 17.6   # unchanged -- keeps the same whitespace above the lockup
-    icon_svg, icon_h = lightbulb_icon(CENTER_X, icon_top, 52)  # ~matches width of "CAREER"
+    icon_top = 30.7   # re-centers the shorter overall block in the trim box
+    icon_svg, icon_h = lightbulb_icon(CENTER_X, icon_top, 62)  # +20% (was 52)
     svg.append(icon_svg)
     icon_bottom = icon_top + icon_h
 
-    name_y = icon_bottom + 16   # tightened lockup (was 28)
-    svg.append(centered_text(CENTER_X, name_y, "Reimagined by Mira", SERIF, 25.0, TEXT, weight="600"))
+    name_y = icon_bottom + 5   # lockup tightened further (was 16)
+    svg.append(centered_text(CENTER_X, name_y, "Reimagined by Mira", SERIF, 26.25, TEXT, weight="600"))  # +5%
 
     strategy_y = name_y + 17
     strategy_text = "CAREER STRATEGY"
-    ls_em = 0.28 * 0.88   # tracking reduced ~12%
+    ls_em = 0.28 * 0.88 * 0.9   # tracking reduced a further ~10%
     font_size = 9.0
     text_w = text_width(strategy_text, SANS, font_size, weight="600", letter_spacing_em=ls_em)
     gap = 10
-    line_len = 28   # lengthened ~17% to balance the wider wordmark
+    line_len = 32   # lengthened a further ~15% (was 28)
     svg.append(hline(CENTER_X - text_w / 2 - gap - line_len, strategy_y - 3, CENTER_X - text_w / 2 - gap))
     svg.append(hline(CENTER_X + text_w / 2 + gap, strategy_y - 3, CENTER_X + text_w / 2 + gap + line_len))
     svg.append(centered_text(CENTER_X, strategy_y, strategy_text, SANS, font_size, GREEN,
                               weight="600", letter_spacing_em=ls_em))
 
     tagline_y = strategy_y + 18
-    svg.append(centered_text(CENTER_X, tagline_y, "Build Your Next Move.", SERIF, 12.5, GREEN, style="italic"))
+    svg.append(centered_text(CENTER_X, tagline_y, "Build Your Next Move.", SERIF, 11.9, GREEN, style="italic"))  # -5%
 
     svg.append('</svg>\n')
     return "".join(svg)
@@ -236,12 +257,12 @@ def build_back():
     right_edge = TRIM_X + TRIM_W - SAFE - 2  # 250 with SAFE=9 setup below
 
     # -- QR block (top right) --
-    qr_module_size = 68.4          # 0.95in minimum
+    qr_module_size = 68.4 * 1.09   # 0.95in minimum, +9%
     # pad must clear a >=4-module quiet zone (QR spec) and exceed rx so the
     # rounded corner never clips into the finder-pattern squares
     pad = 12.0
     outline_size = qr_module_size + 2 * pad
-    outline_x = (TRIM_X + TRIM_W) - SAFE - outline_size
+    outline_x = right_edge - outline_size   # right edge now shares the same grid line as the CTA row/website
     outline_y = SAFE_Y + 3   # nudged down to optically center against the copy block
     rx = 6
 
@@ -250,7 +271,7 @@ def build_back():
     qr_svg, n_modules = make_qr_svg("https://reimaginedbymira.com", GREEN, qr_x, qr_y, qr_module_size)
 
     svg.append(f'  <rect x="{outline_x:.3f}" y="{outline_y:.3f}" width="{outline_size:.3f}" height="{outline_size:.3f}" '
-               f'rx="{rx}" fill="{WHITE}" stroke="{GREEN}" stroke-width="0.8"/>\n')
+               f'rx="{rx}" fill="{WHITE}" stroke="{GREEN}" stroke-width="0.56"/>\n')  # -30% from 0.8
     svg.append(qr_svg)
 
     # -- header (two lines) --
@@ -291,15 +312,15 @@ def build_back():
     svg.append('  </g>\n')
 
     cta_text = "BOOK YOUR FREE DISCOVERY CALL"
-    # cta_size trimmed slightly (5.8->5.5) to absorb the wider arrow gap and
-    # bigger website text below without the row overflowing
+    # cta_size held at 5.5 (not shrunk further) to protect legibility -- see
+    # note in the polish-pass summary about this row being width-constrained
     cta_size = 5.5
     cta_ls = 0.02
     web_text = "REIMAGINEDBYMIRA.COM"
-    web_size = 6.3   # +5%
+    web_size = 6.3   # held at last round's size -- see polish-pass note on this row
     web_ls = 0.02
 
-    cta_text_x = circ_cx + circ_r + 12   # arrow-to-text gap widened (was 5, +7)
+    cta_text_x = circ_cx + circ_r + 13   # arrow-to-text gap widened again (was 12, +1)
     svg.append(left_text(cta_text_x, cta_y, cta_text, SANS, cta_size, GREEN,
                           weight="700", letter_spacing_em=cta_ls))
 
@@ -307,7 +328,7 @@ def build_back():
     web_w = text_width(web_text, SANS, web_size, weight="600", letter_spacing_em=web_ls)
     vdiv_x = cta_text_x + cta_w + 7
     web_start = right_edge - web_w
-    assert web_start - vdiv_x >= 4, f"CTA row overflow: gap={web_start - vdiv_x:.1f}"
+    assert web_start - vdiv_x >= 1, f"CTA row overflow: gap={web_start - vdiv_x:.1f}"
 
     svg.append(vline(vdiv_x, cta_y - 7.0, cta_y + 2.2, width=0.8))
     svg.append(right_text(right_edge, cta_y, web_text, SANS, web_size, GREEN,

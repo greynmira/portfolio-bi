@@ -1,0 +1,80 @@
+%!
+% PDF/X-4 prefix for the Reimagined by Mira business card.
+% Adapted from Ghostscript's stock lib/PDFX_def.ps (which templates X-3;
+% X-4 just needs a PDF 1.6+ CompatibilityLevel and this version string).
+
+systemdict /ColorConversionStrategy known {
+  systemdict /ColorConversionStrategy get cvn dup /Gray ne exch /CMYK ne and
+} {
+  (\nERROR: ColorConversionStrategy not set.)=
+  true
+} ifelse
+{ (ERROR: ColorConversionStrategy must be /DeviceGray or /DeviceCMYK.)=
+  /ColorConversionStrategy cvx /rangecheck signalerror
+} if
+
+[ /GTS_PDFXVersion (PDF/X-4)
+  /Title (Reimagined by Mira - Business Card - Print Ready)
+  /Trapped /False
+/DOCINFO pdfmark
+
+/ICCProfile (/home/user/portfolio-bi/business-card/pdfx/default_cmyk.icc) def
+
+currentdict /ICCProfile known {
+  [/_objdef {icc_PDFX} /type /stream /OBJ pdfmark
+  [{icc_PDFX} <<
+  systemdict /ColorConversionStrategy known {
+    systemdict /ColorConversionStrategy get cvn dup /Gray eq {
+      pop /N 1 false
+    }{
+      dup /RGB eq {
+        (RGB is not a valid ColorConversionStrategy for PDF/X output)=
+        /ColorConversionStrategycvx /rangecheck signalerror
+      }{
+        /CMYK eq {
+          /N 4 false
+        }{
+          (ColorConversionStrategy not a device space, falling back to ProcessColorModel, output may not be valid PDF/X.)=
+          true
+        } ifelse
+      } ifelse
+    } ifelse
+  } {
+    (ColorConversionStrategy not set, falling back to ProcessColorModel, output may not be valid PDF/X.)=
+    true
+  } ifelse
+  {
+    currentpagedevice /ProcessColorModel get
+    dup /DeviceGray eq {
+      pop /N 1
+    }{
+      dup /DeviceRGB eq {
+        (RGB is not a valid ProcessColorModel for PDF/X output)=
+        /ColorConversionStrategycvx /rangecheck signalerror
+      }{
+        dup /DeviceCMYK eq {
+          pop /N 4
+        } {
+          (ProcessColorModel not a device space.)=
+          /ProcessColorModel cvx /rangecheck signalerror
+        } ifelse
+      } ifelse
+    } ifelse
+  } if
+  >> /PUT pdfmark
+  [{icc_PDFX} ICCProfile (r) file /PUT pdfmark
+} if
+
+[/_objdef {OutputIntent_PDFX} /type /dict /OBJ pdfmark
+[{OutputIntent_PDFX} <<
+  /Type /OutputIntent
+  /S /GTS_PDFX
+  /OutputCondition (Commercial and specialty printing)
+  /Info (Ghostscript generic CMYK - substitute your printer's ICC profile if they require one)
+  /OutputConditionIdentifier (Custom)
+  /RegistryName (http://www.color.org)
+  currentdict /ICCProfile known {
+    /DestOutputProfile {icc_PDFX}
+  } if
+>> /PUT pdfmark
+[{Catalog} <</OutputIntents [ {OutputIntent_PDFX} ]>> /PUT pdfmark
