@@ -1,26 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="3.75in" height="2.25in" viewBox="0 0 270.0 162.0">
   <rect x="0" y="0" width="270.0" height="162.0" fill="#FFFFFF"/>
-  <g transform="translate(104.000,30.700) scale(0.47692)"
-     fill="none" stroke="#0F4D3C" stroke-linecap="round" stroke-linejoin="round">
-    
-    <path stroke-width="1.5" d="M 65.0,18
-             C 45.0,19 38.0,33 38.0,48
-             C 38.0,60 44.0,70 49.0,76
-             L 81.0,76
-             C 86.0,70 92.0,60 92.0,48
-             C 92.0,33 85.0,19 65.0,18 Z"/>
-    <g stroke-width="1.15">
-      <line x1="50.0" y1="80.0" x2="80.0" y2="80.0"/>
-      <line x1="52.7" y1="88.0" x2="77.3" y2="88.0"/>
-      <line x1="55.7" y1="96.0" x2="74.3" y2="96.0"/>
-    </g>
-    <path stroke-width="0.95" d="M 65.0,82.0 L 65.0,58.0"/>
-    <path stroke-width="0.85" d="M 65.0,58.0 C 59.25,58.0 56.95,52.25 60.4,48.225 C 62.7,45.925 65.0,49.95 65.0,58.0 Z"/>
-    <path stroke-width="0.85" d="M 65.0,58.0 C 70.75,58.0 73.05,52.25 69.6,48.225 C 67.3,45.925 65.0,49.95 65.0,58.0 Z"/>
+  <g transform="translate(104.000,25.400) scale(0.31000)">
+    <circle cx="100.0" cy="107.0" r="95.0" fill="none" stroke="#0F4D3C" stroke-width="7"/>
+    <g transform="translate(100.0,107.0) scale(0.84) translate(-100.0,-107.0)"><path fill="none" stroke="#0F4D3C" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" d="M 57,102 A 55,55 0 1 1 143,102"/><path fill="none" stroke="#0F4D3C" stroke-width="9" stroke-linecap="round" d="M 57,102 C 55,117 63,129 69,140"/><path fill="none" stroke="#0F4D3C" stroke-width="9" stroke-linecap="round" d="M 143,102 C 145,117 137,129 131,140"/><rect x="69" y="148" width="62" height="10" rx="5" fill="#0F4D3C"/><rect x="69" y="163" width="62" height="10" rx="5" fill="#0F4D3C"/><path fill="#0F4D3C" d="M 69,180 A 31,15 0 0 0 131,180 Z"/><path fill="#0F4D3C" d="M 36,50 C 37.02,61.56 41.44,65.98 53,67 C 41.44,68.02 37.02,72.44 36,84 C 34.98,72.44 30.56,68.02 19,67 C 30.56,65.98 34.98,61.56 36,50 Z"/><path fill="#0F4D3C" d="M 162,132 C 162.66,139.48 165.52,142.34 173,143 C 165.52,143.66 162.66,146.52 162,154 C 161.34,146.52 158.48,143.66 151,143 C 158.48,142.34 161.34,139.48 162,132 Z"/><text x="100" y="114" text-anchor="middle" font-family="EB Garamond" font-weight="700" font-size="76" fill="#0F4D3C">M</text></g>
   </g>
-  <text x="135.000" y="92.931" text-anchor="middle" font-family="EB Garamond" font-size="26.25" font-weight="600" font-style="normal" fill="#000000">Reimagined by Mira</text>
-  <line x1="33.166" y1="106.931" x2="65.166" y2="106.931" stroke="#0F4D3C" stroke-width="0.75"/>
-  <line x1="204.834" y1="106.931" x2="236.834" y2="106.931" stroke="#0F4D3C" stroke-width="0.75"/>
-  <text x="134.002" y="109.931" text-anchor="middle" font-family="Montserrat" font-size="9.0" font-weight="600" font-style="normal" fill="#0F4D3C" letter-spacing="1.996">CAREER STRATEGY</text>
-  <text x="135.000" y="127.931" text-anchor="middle" font-family="EB Garamond" font-size="11.9" font-weight="normal" font-style="italic" fill="#0F4D3C">Build Your Next Move.</text>
+  <text x="135.000" y="98.600" text-anchor="middle" font-family="EB Garamond" font-size="26.25" font-weight="600" font-style="normal" fill="#000000">Reimagined by Mira</text>
+  <line x1="33.166" y1="112.600" x2="65.166" y2="112.600" stroke="#0F4D3C" stroke-width="0.75"/>
+  <line x1="204.834" y1="112.600" x2="236.834" y2="112.600" stroke="#0F4D3C" stroke-width="0.75"/>
+  <text x="134.002" y="115.600" text-anchor="middle" font-family="Montserrat" font-size="9.0" font-weight="600" font-style="normal" fill="#0F4D3C" letter-spacing="1.996">CAREER STRATEGY</text>
+  <text x="135.000" y="133.600" text-anchor="middle" font-family="EB Garamond" font-size="11.9" font-weight="normal" font-style="italic" fill="#0F4D3C">Build Your Next Move.</text>
 </svg>

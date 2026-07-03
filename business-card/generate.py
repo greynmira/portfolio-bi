@@ -95,60 +95,49 @@ SVG_HEAD = (
 ).format(win=DOC_W / 72.0, hin=DOC_H / 72.0, w=DOC_W, h=DOC_H)
 
 
-def lightbulb_icon(cx, top_y, width, with_rays=False):
-    """Lightbulb-with-sprout mark, round 3. Local box is 130x120 units: a
-    properly rounded (not elongated) globe with soft shoulders, a compact
-    stem integrated into a 3-ring socket, and an enlarged twin-leaf
-    filament. Rays are optional (with_rays=True) -- the no-rays default
-    reads cleaner and more editorial; the ray version signals "idea" more
-    literally. Both were compared side by side before picking the default.
-    """
-    LOCAL_W, LOCAL_H = 130.0, 120.0
-    LCX = 65.0
+def lightbulb_icon(cx, top_y, width):
+    """Monogram badge mark, round 5: a bold-stroke bulb (open globe with two
+    wishbone leads into a filled 2-bar socket + dome cap), a bold serif "M"
+    standing in for the filament, two sparkle accents, and an encircling
+    ring -- redrawn to match a reference image the client supplied.
+    Local box is 200x220 units, ring centered at (100,107) r=95."""
+    LOCAL_W, LOCAL_H = 200.0, 220.0
+    RING_CX, RING_CY, RING_R = 100.0, 107.0, 95.0
     s = width / LOCAL_W
     h = LOCAL_H * s
     tx = cx - width / 2.0
     ty = top_y
 
-    neck_bottom = 76.0
-    branch = neck_bottom - 18
-    globe = f'''<path stroke-width="1.5" d="M {LCX},18
-             C {LCX-20},19 {LCX-27},33 {LCX-27},48
-             C {LCX-27},60 {LCX-21},70 {LCX-16},76
-             L {LCX+16},76
-             C {LCX+21},70 {LCX+27},60 {LCX+27},48
-             C {LCX+27},33 {LCX+20},19 {LCX},18 Z"/>'''
-    socket = f'''<g stroke-width="1.15">
-      <line x1="{LCX-15}" y1="{neck_bottom+4}" x2="{LCX+15}" y2="{neck_bottom+4}"/>
-      <line x1="{LCX-12.3}" y1="{neck_bottom+12}" x2="{LCX+12.3}" y2="{neck_bottom+12}"/>
-      <line x1="{LCX-9.3}" y1="{neck_bottom+20}" x2="{LCX+9.3}" y2="{neck_bottom+20}"/>
-    </g>'''
-    stem = f'<path stroke-width="0.95" d="M {LCX},{neck_bottom+6} L {LCX},{branch}"/>'
-    # twin-loop filament, ~15% larger than the previous round
-    leaf_l = (f'<path stroke-width="0.85" d="M {LCX},{branch} '
-              f'C {LCX-5.75},{branch} {LCX-8.05},{branch-5.75} {LCX-4.6},{branch-9.775} '
-              f'C {LCX-2.3},{branch-12.075} {LCX},{branch-8.05} {LCX},{branch} Z"/>')
-    leaf_r = (f'<path stroke-width="0.85" d="M {LCX},{branch} '
-              f'C {LCX+5.75},{branch} {LCX+8.05},{branch-5.75} {LCX+4.6},{branch-9.775} '
-              f'C {LCX+2.3},{branch-12.075} {LCX},{branch-8.05} {LCX},{branch} Z"/>')
-    rays = ""
-    if with_rays:
-        rays = f'''<g stroke-width="1.05">
-      <line x1="{LCX}" y1="18" x2="{LCX}" y2="8"/>
-      <line x1="{LCX-22.6}" y1="27.4" x2="{LCX-29.4}" y2="19.5"/>
-      <line x1="{LCX+22.6}" y1="27.4" x2="{LCX+29.4}" y2="19.5"/>
-      <line x1="{LCX-32}" y1="50" x2="{LCX-42}" y2="50"/>
-      <line x1="{LCX+32}" y1="50" x2="{LCX+42}" y2="50"/>
-    </g>'''
+    ring = f'<circle cx="{RING_CX}" cy="{RING_CY}" r="{RING_R}" fill="none" stroke="{GREEN}" stroke-width="7"/>'
 
-    return f'''  <g transform="translate({tx:.3f},{ty:.3f}) scale({s:.5f})"
-     fill="none" stroke="{GREEN}" stroke-linecap="round" stroke-linejoin="round">
-    {rays}
-    {globe}
-    {socket}
-    {stem}
-    {leaf_l}
-    {leaf_r}
+    globe = (f'<path fill="none" stroke="{GREEN}" stroke-width="9" stroke-linecap="round" '
+             f'stroke-linejoin="round" d="M 57,102 A 55,55 0 1 1 143,102"/>')
+    leg_l = (f'<path fill="none" stroke="{GREEN}" stroke-width="9" stroke-linecap="round" '
+             f'd="M 57,102 C 55,117 63,129 69,140"/>')
+    leg_r = (f'<path fill="none" stroke="{GREEN}" stroke-width="9" stroke-linecap="round" '
+             f'd="M 143,102 C 145,117 137,129 131,140"/>')
+    bar1 = f'<rect x="69" y="148" width="62" height="10" rx="5" fill="{GREEN}"/>'
+    bar2 = f'<rect x="69" y="163" width="62" height="10" rx="5" fill="{GREEN}"/>'
+    cap = f'<path fill="{GREEN}" d="M 69,180 A 31,15 0 0 0 131,180 Z"/>'
+
+    def sparkle(cx2, cy2, r):
+        return (f'<path fill="{GREEN}" d="M {cx2},{cy2-r} '
+                f'C {cx2+r*0.06},{cy2-r*0.32} {cx2+r*0.32},{cy2-r*0.06} {cx2+r},{cy2} '
+                f'C {cx2+r*0.32},{cy2+r*0.06} {cx2+r*0.06},{cy2+r*0.32} {cx2},{cy2+r} '
+                f'C {cx2-r*0.06},{cy2+r*0.32} {cx2-r*0.32},{cy2+r*0.06} {cx2-r},{cy2} '
+                f'C {cx2-r*0.32},{cy2-r*0.06} {cx2-r*0.06},{cy2-r*0.32} {cx2},{cy2-r} Z"/>')
+    sparkle_big = sparkle(36, 67, 17)
+    sparkle_small = sparkle(162, 143, 11)
+
+    letter = (f'<text x="100" y="114" text-anchor="middle" font-family="{SERIF}" '
+              f'font-weight="700" font-size="76" fill="{GREEN}">M</text>')
+
+    inner = (f'<g transform="translate({RING_CX},{RING_CY}) scale(0.84) translate({-RING_CX},{-RING_CY})">'
+             f'{globe}{leg_l}{leg_r}{bar1}{bar2}{cap}{sparkle_big}{sparkle_small}{letter}</g>')
+
+    return f'''  <g transform="translate({tx:.3f},{ty:.3f}) scale({s:.5f})">
+    {ring}
+    {inner}
   </g>
 ''', h
 
@@ -197,8 +186,8 @@ def build_front():
     svg = [SVG_HEAD]
     svg.append(f'  <rect x="0" y="0" width="{DOC_W}" height="{DOC_H}" fill="{WHITE}"/>\n')
 
-    icon_top = 30.7   # re-centers the shorter overall block in the trim box
-    icon_svg, icon_h = lightbulb_icon(CENTER_X, icon_top, 62)  # +20% (was 52)
+    icon_top = 25.4   # re-centers the block for the new (taller) badge mark
+    icon_svg, icon_h = lightbulb_icon(CENTER_X, icon_top, 62)
     svg.append(icon_svg)
     icon_bottom = icon_top + icon_h
 
