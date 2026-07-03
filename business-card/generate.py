@@ -96,11 +96,13 @@ SVG_HEAD = (
 
 
 def lightbulb_icon(cx, top_y, width):
-    """Monogram badge mark, round 5: a bold-stroke bulb (open globe with two
-    wishbone leads into a filled 2-bar socket + dome cap), a bold serif "M"
-    standing in for the filament, two sparkle accents, and an encircling
-    ring -- redrawn to match a reference image the client supplied.
-    Local box is 200x220 units, ring centered at (100,107) r=95."""
+    """Monogram badge mark, round 6: redrawn from pixel-level measurements
+    of the client's reference image (ring/bulb/sparkle centers and radii
+    derived from scanning the actual PNG, not eyeballed) -- a bold-stroke
+    bulb (one continuous open-globe-into-wishbone-leads path, not an arc
+    plus a separate leg curve) over a filled 2-bar socket + dome cap, a
+    bold serif "M" standing in for the filament, two sparkle accents, and
+    an encircling ring. Local box is 200x220, ring centered at (100,107) r=95."""
     LOCAL_W, LOCAL_H = 200.0, 220.0
     RING_CX, RING_CY, RING_R = 100.0, 107.0, 95.0
     s = width / LOCAL_W
@@ -110,15 +112,15 @@ def lightbulb_icon(cx, top_y, width):
 
     ring = f'<circle cx="{RING_CX}" cy="{RING_CY}" r="{RING_R}" fill="none" stroke="{GREEN}" stroke-width="7"/>'
 
-    globe = (f'<path fill="none" stroke="{GREEN}" stroke-width="9" stroke-linecap="round" '
-             f'stroke-linejoin="round" d="M 57,102 A 55,55 0 1 1 143,102"/>')
-    leg_l = (f'<path fill="none" stroke="{GREEN}" stroke-width="9" stroke-linecap="round" '
-             f'd="M 57,102 C 55,117 63,129 69,140"/>')
-    leg_r = (f'<path fill="none" stroke="{GREEN}" stroke-width="9" stroke-linecap="round" '
-             f'd="M 143,102 C 145,117 137,129 131,140"/>')
-    bar1 = f'<rect x="69" y="148" width="62" height="10" rx="5" fill="{GREEN}"/>'
-    bar2 = f'<rect x="69" y="163" width="62" height="10" rx="5" fill="{GREEN}"/>'
-    cap = f'<path fill="{GREEN}" d="M 69,180 A 31,15 0 0 0 131,180 Z"/>'
+    bulb = (f'<path fill="none" stroke="{GREEN}" stroke-width="5.6" stroke-linecap="round" '
+            f'stroke-linejoin="round" d="M 82.5,149.1 '
+            f'C 80,138 63,105 58,90 '
+            f'C 58,65 80,44.5 100,43.8 '
+            f'C 120,44.5 142,65 142,90 '
+            f'C 137,105 120,138 117.5,149.1"/>')
+    bar1 = f'<rect x="79.9" y="153.15" width="40.3" height="4.05" rx="2" fill="{GREEN}"/>'
+    bar2 = f'<rect x="79.9" y="162.26" width="40.3" height="4.05" rx="2" fill="{GREEN}"/>'
+    cap = f'<path fill="{GREEN}" d="M 85.1,170.87 A 14.9,10.6 0 0 0 114.9,170.87 Z"/>'
 
     def sparkle(cx2, cy2, r):
         return (f'<path fill="{GREEN}" d="M {cx2},{cy2-r} '
@@ -126,18 +128,21 @@ def lightbulb_icon(cx, top_y, width):
                 f'C {cx2+r*0.32},{cy2+r*0.06} {cx2+r*0.06},{cy2+r*0.32} {cx2},{cy2+r} '
                 f'C {cx2-r*0.06},{cy2+r*0.32} {cx2-r*0.32},{cy2+r*0.06} {cx2-r},{cy2} '
                 f'C {cx2-r*0.32},{cy2-r*0.06} {cx2-r*0.06},{cy2-r*0.32} {cx2},{cy2-r} Z"/>')
-    sparkle_big = sparkle(36, 67, 17)
-    sparkle_small = sparkle(162, 143, 11)
+    sparkle_big = sparkle(47.8, 62.9, 8.4)
+    sparkle_small = sparkle(144.4, 136.8, 5.5)
 
-    letter = (f'<text x="100" y="114" text-anchor="middle" font-family="{SERIF}" '
-              f'font-weight="700" font-size="76" fill="{GREEN}">M</text>')
-
-    inner = (f'<g transform="translate({RING_CX},{RING_CY}) scale(0.84) translate({-RING_CX},{-RING_CY})">'
-             f'{globe}{leg_l}{leg_r}{bar1}{bar2}{cap}{sparkle_big}{sparkle_small}{letter}</g>')
+    letter = (f'<text x="100" y="117" text-anchor="middle" font-family="{SERIF}" '
+              f'font-weight="700" font-size="70" fill="{GREEN}">M</text>')
 
     return f'''  <g transform="translate({tx:.3f},{ty:.3f}) scale({s:.5f})">
     {ring}
-    {inner}
+    {bulb}
+    {bar1}
+    {bar2}
+    {cap}
+    {sparkle_big}
+    {sparkle_small}
+    {letter}
   </g>
 ''', h
 
