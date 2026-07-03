@@ -78,26 +78,38 @@ SVG_HEAD = (
 
 
 def lightbulb_icon(cx, top_y, width):
-    """Lightbulb-with-sprout logo. Local box is 100x120 units."""
+    """Lightbulb-with-sprout mark. Local box is 100x135 units: a graceful
+    tapered (non-circular) globe, thin balanced rays, a floating tapered
+    ring base, and a delicate twin-leaf filament -- refined line weights
+    throughout for a premium, editorial feel rather than a stock glyph."""
     s = width / 100.0
-    h = 120.0 * s
+    h = 135.0 * s
     tx = cx - width / 2.0
     ty = top_y
     return f'''  <g transform="translate({tx:.3f},{ty:.3f}) scale({s:.5f})"
      fill="none" stroke="{GREEN}" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="50" y1="13" x2="50" y2="4" stroke-width="2"/>
-    <line x1="28.1" y1="22.1" x2="21.7" y2="15.7" stroke-width="2"/>
-    <line x1="71.9" y1="22.1" x2="78.3" y2="15.7" stroke-width="2"/>
-    <line x1="19" y1="44" x2="10" y2="44" stroke-width="2"/>
-    <line x1="81" y1="44" x2="90" y2="44" stroke-width="2"/>
-    <circle cx="50" cy="44" r="24" stroke-width="2"/>
-    <path stroke-width="2" d="M 40.5,64 C 38,70 37,74 37,78 L 63,78 C 63,74 62,70 59.5,64"/>
-    <path stroke-width="2" d="M 37,78 L 37,88 L 63,88 L 63,78"/>
-    <line x1="38" y1="83" x2="62" y2="83" stroke-width="2"/>
-    <line x1="42" y1="93" x2="58" y2="93" stroke-width="2"/>
-    <path d="M 50,78 L 50,53" stroke-width="1.6"/>
-    <path d="M 50,53 C 41,53 38,45 44,40 C 49,36 52,44 50,53 Z" stroke-width="1.4"/>
-    <path d="M 50,53 C 59,53 62,45 56,40 C 51,36 48,44 50,53 Z" stroke-width="1.4"/>
+    <g stroke-width="1.1">
+      <line x1="50" y1="12" x2="50" y2="1"/>
+      <line x1="32" y1="19" x2="23" y2="9.5"/>
+      <line x1="68" y1="19" x2="77" y2="9.5"/>
+      <line x1="21" y1="52" x2="8" y2="52"/>
+      <line x1="79" y1="52" x2="92" y2="52"/>
+    </g>
+    <path stroke-width="1.5" d="M 25,61
+             C 25,37 35,20 50,20
+             C 65,20 75,37 75,61
+             C 75,79 68,91 60,97
+             L 40,97
+             C 32,91 25,79 25,61
+             Z"/>
+    <g stroke-width="1.3">
+      <line x1="41" y1="103" x2="59" y2="103"/>
+      <line x1="43" y1="109.5" x2="57" y2="109.5"/>
+      <line x1="45.5" y1="116" x2="54.5" y2="116"/>
+    </g>
+    <path stroke-width="1.0" d="M 50,93 L 50,55"/>
+    <path stroke-width="0.8" d="M 50,55 C 45,55 43,50 46,46.5 C 48,44.5 50,48 50,55 Z"/>
+    <path stroke-width="0.8" d="M 50,55 C 55,55 57,50 54,46.5 C 52,44.5 50,48 50,55 Z"/>
   </g>
 ''', h
 
@@ -146,12 +158,12 @@ def build_front():
     svg = [SVG_HEAD]
     svg.append(f'  <rect x="0" y="0" width="{DOC_W}" height="{DOC_H}" fill="{WHITE}"/>\n')
 
-    icon_top = 31.5   # nudged down from safe-top so the whole block centers in the trim box
-    icon_svg, icon_h = lightbulb_icon(CENTER_X, icon_top, 32)
+    icon_top = 17.6   # positions the whole block to center in the trim box
+    icon_svg, icon_h = lightbulb_icon(CENTER_X, icon_top, 45)
     svg.append(icon_svg)
     icon_bottom = icon_top + icon_h
 
-    name_y = icon_bottom + 22
+    name_y = icon_bottom + 28
     svg.append(centered_text(CENTER_X, name_y, "Reimagined by Mira", SERIF, 23.5, TEXT, weight="600"))
 
     strategy_y = name_y + 17
